@@ -1,17 +1,12 @@
-# Welcome to MkDocs
+# BDD by example
 
-For full documentation visit [mkdocs.org](http://mkdocs.org).
+![Aula Software Libre de la UCO](images/logoasl.png)
 
-## Commands
+Este taller forma parte de las actividades del [Aula de Software Libre de la
+Universidad de Córdoba](https://www.uco.es/aulasoftwarelibre).
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs help` - Print this help message.
+El material de esta documentación está sacado de las presentaciones de [https://es.slideshare.net/CiaranMcNulty](Ciaran McNulty):
 
-## Project layout
+* [TDD with PhpSpec](https://es.slideshare.net/CiaranMcNulty/tdd-with-phpspec)
+* [Driving Design through Examples](https://es.slideshare.net/CiaranMcNulty/driving-design-through-examples-phpcon-pl-2015)
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
