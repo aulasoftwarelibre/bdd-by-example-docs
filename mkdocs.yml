@@ -35,6 +35,7 @@ markdown_extensions:
 pages:
     - Inicio: index.md
     - Introducción: introduction.md
+    - Modelando con ejemplos: modelling.md
 
 google_analytics:
     - 'UA-51754922-1'
