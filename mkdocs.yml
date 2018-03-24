@@ -1,0 +1,40 @@
+site_name: 'BDD by example'
+site_author: 'Sergio Gómez <sergio@uco.es>'
+site_description: 'Curso básico de BDD'
+site_favicon: 'images/logoasl.png'
+repo_name: 'aulasoftwarelibre/bdd-by-example'
+repo_url: 'https://github.com/aulasoftwarelibre/bdd-by-example.git'
+
+theme:
+    name: 'material'
+
+extra_css: [extra.css]
+extra:
+    language: 'es'
+    palette:
+        primary: 'green'
+        accent: 'light green'
+    social:
+        - type: 'github'
+          link: 'https://github.com/aulasoftwarelibre'
+        - type: 'twitter'
+          link: 'https://twitter.com/aulasl'
+        - type: 'facebook'
+          link: 'https://facebook.com/aulasl'
+    feature:
+        tabs: true
+
+markdown_extensions:
+    - admonition: ~
+    - codehilite:
+        guess_lang: false
+    - toc:
+        permalink: true
+    - def_list: ~
+
+pages:
+    - Inicio: index.md
+
+google_analytics:
+    - 'UA-51754922-1'
+    - 'auto'
