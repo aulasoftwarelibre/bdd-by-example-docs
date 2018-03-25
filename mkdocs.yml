@@ -37,6 +37,7 @@ pages:
     - Inicio: index.md
     - Introducción: introduction.md
     - Modelando con ejemplos: modelling.md
+    - Crear el proyecto: start-project.md
 
 google_analytics:
     - 'UA-51754922-1'
