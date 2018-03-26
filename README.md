@@ -6,7 +6,7 @@
 
 <div align="center">
 
-[![forthebadge](https://forthebadge.com/images/badges/built-by-developers.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/made-with-python.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/uses-git.svg)](https://forthebadge.com)
+![built by developers](https://img.shields.io/badge/built%20by-developers%20%3C%2F%3E-orange.svg?longCache=true&style=for-the-badge) ![made with php](https://img.shields.io/badge/made%20with-mkdocs-green.svg?longCache=true&style=for-the-badge) ![uses git](https://img.shields.io/badge/uses-git-blue.svg?longCache=true&style=for-the-badge)
 
 </div>
 
