@@ -11,6 +11,7 @@ Se nos creará un directorio con todo lo que necesitamos para empezar a trabajar
     {
         "require-dev": {
             "behat/behat": "^3.4",
+            "kanel/phpspec-data-provider-extension": "^1.0",
             "phpspec/phpspec": "^4.3",
             "leanphp/phpspec-code-coverage": "^4.2",
             "phpunit/phpunit": "^7.0"
@@ -379,7 +380,7 @@ Vamos a seguir especificando los requisitos de nuestra clase para pasar la prueb
     class MenuSpec extends ObjectBehavior
     {
         const NUMBER = 10;
-        const PRICE = 25;
+        const PRICE = 2500;
     
         function let()
         {
@@ -403,6 +404,11 @@ Vamos a seguir especificando los requisitos de nuestra clase para pasar la prueb
     }
 
 Las líneas 24 y 29 especifican los dos comportamientos que esperamos de nuestra clase, devolver el número y devolver el precio. Pero antes de devolver nada esa información debe incorporarse a través del constructor. Para ello usamos la función _ let_ (línea 14), que sirve para configurar la prueba en su comienzo. En este caso, la línea 16 construye la clase con el número y el precio del menú. El uso de constantes es para ser más descriptivo a la hora de leer la prueba. Ya que hemos especificado como se construye la clase, especificamos los otros dos comportamientos.
+
+!!! info
+
+    Estamos usando euros para los ejemplos. En realidad, y dado que PHP no tiene un tipo de datos para datos financieros, deberíamos usar alguna clase _Moneda_ o guardar los datos en céntimos para evitar el uso de decimales. Para simplificar el tutorial vamos a usar céntimos. Así que aunque en los test usemos euros en la clase _Menu_ vamos a almacenar el valor en céntimos.
+
 
 Para indicar el número de menú, indicamos que llamamos a un método `number()` (línea 26) que debe devolver el mismo valor que se pasó al constructor. Para indicar el precio, lo mismo pero llamando a un método `price()` (línea 31).
 
@@ -489,7 +495,7 @@ Obteniendo la siguiente salida:
       24  ✘ has a menu number
             expected [integer:10], but got null.
       29  ✘ has a price
-            expected [integer:25], but got null.
+            expected [integer:2500], but got null.
     
     ----  failed examples
     
@@ -499,7 +505,7 @@ Obteniendo la siguiente salida:
     
             Restaurant/Menu
       29  ✘ has a price
-            expected [integer:25], but got null.
+            expected [integer:2500], but got null.
     
     
     1 specs
@@ -535,30 +541,32 @@ La especificación de la prueba ha creado el esqueleto de nuestra clase, ahora s
 
     #!php
     <?php
-    
+    declare(strict_types=1);
+
     namespace Restaurant;
-    
-    class Menu
+
+    class Menu implements Priced
     {
         private $number;
         private $price;
-    
-        public function __construct($number, $price)
+
+        public function __construct(int $number, int $price)
         {
             $this->number = $number;
             $this->price = $price;
         }
-    
-        public function number()
+
+        public function number(): int
         {
             return $this->number;
         }
-    
-        public function price()
+
+        public function price(): int
         {
             return $this->price;
         }
     }
+
 
 Ejecutamos las pruebas y comprobamos que pasan:
 
@@ -614,7 +622,7 @@ Ahora podemos programar el paso para ir progresando en nuestros casos de uso. Ed
         public function losSiguientesMenus(TableNode $table)
         {
             foreach ($table->getHash() as $menu) {
-                $this->menus[] = new \Restaurant\Menu($menu['número'], $menu['precio']);
+                $this->menus[$menu['número']] = new \Restaurant\Menu($menu['número'], $menu['precio'] * 100);
             }
         }
     
