@@ -49,4 +49,28 @@
     </url>
     
 
+    
+    <url>
+     <loc>/third-scenario/</loc>
+     <lastmod>2018-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/fourth-scenario/</loc>
+     <lastmod>2018-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>/fifth-scenario/</loc>
+     <lastmod>2018-03-26</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
 </urlset>

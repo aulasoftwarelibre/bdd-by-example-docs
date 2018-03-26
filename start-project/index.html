@@ -370,6 +370,42 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../third-scenario/" title="Tercer escenario" class="md-nav__link">
+      Tercer escenario
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fourth-scenario/" title="Cuarto escenario" class="md-nav__link">
+      Cuarto escenario
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fifth-scenario/" title="Quinto escenario" class="md-nav__link">
+      Quinto escenario
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -528,8 +564,7 @@
 47
 48
 49
-50
-51</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c">#language: es</span><span class="nf"></span>
+50</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c">#language: es</span><span class="nf"></span>
 <span class="k">Característica:</span><span class="nf"> Pagar un menú</span>
 <span class="nf">    Reglas:</span>
 
@@ -569,8 +604,7 @@
 <span class="k">        Dado </span><span class="nf">que he comprado </span><span class="s">5</span><span class="nf"> menús del número </span><span class="s">1</span><span class="nf"></span>
 <span class="nf">        </span><span class="k">Cuando </span><span class="nf">pido la cuenta recibo una factura de </span><span class="s">55</span><span class="nf"> euros</span>
 <span class="nf">        </span><span class="k">Y </span><span class="nf">pago con </span><span class="s">550</span><span class="nf"> puntos y </span><span class="s">0</span><span class="nf"> euros</span>
-<span class="nf">        </span><span class="k">Entonces </span><span class="nf">la factura no está pagada</span>
-<span class="nf">        </span><span class="k">Y </span><span class="nf">quedan </span><span class="s">5</span><span class="nf"> euros por pagar</span>
+<span class="nf">        </span><span class="k">Entonces </span><span class="nf">quedan </span><span class="s">5</span><span class="nf"> euros por pagar</span>
 
 <span class="nf">    </span><span class="k">Escenario:</span><span class="nf"> Comprar menús de varios tipos</span>
 <span class="k">        Dado </span><span class="nf">que he comprado </span><span class="s">1</span><span class="nf"> menú del número </span><span class="s">1</span><span class="nf"></span>
@@ -619,109 +653,101 @@
 
 <p>El <em>step</em> se compone de una cabecera con las palabras <code>@Given</code>, <code>@When</code> o <code>@Then</code>  y una frase que coincide con la que hayamos determinado en el paso. Los números y las cadenas que se pongan entre comillas se convierten en parámetros del paso. También es posible usar expresiones regulares, pero en esos casos debemos hacerlo a mano. El objetivo es meter todos estos snippets en el archivo de contexto que usa <em>Behat</em>.</p>
 <p>Si editamos el archivo <em>features/bootstrap/FeatureContext.php</em>, veremos el archivo de contexto por defecto que usar <em>Behat</em>. Podemos tener los que necesitemos, para separar los <em>steps</em> de forma conveniente, pero eso es configuración avanzada del entorno y no nos vamos a meter en eso. Editamos el archivo y copiamos el siguiente contenido en él:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
 
 <span class="k">use</span> <span class="nx">Behat\Behat\Context\Context</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Behat\Behat\Tester\Exception\PendingException</span><span class="p">;</span>
@@ -796,14 +822,6 @@
 <span class="sd">     * @When pago con :arg1 puntos y :arg2 euros</span>
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">pagoConPuntosYEuros</span><span class="p">(</span><span class="nv">$arg1</span><span class="p">,</span> <span class="nv">$arg2</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nx">PendingException</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="sd">/**</span>
-<span class="sd">     * @Then la factura no está pagada</span>
-<span class="sd">     */</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">laFacturaNoEstaPagada</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nx">PendingException</span><span class="p">();</span>
     <span class="p">}</span>
@@ -1447,113 +1465,105 @@
 <p>Ya tenemos nuestra primera clase completada que pasa la especificación.</p>
 <h2 id="terminar-de-implementar-el-primer-step">Terminar de implementar el primer step<a class="headerlink" href="#terminar-de-implementar-el-primer-step" title="Permanent link">&para;</a></h2>
 <p>Ahora podemos programar el paso para ir progresando en nuestros casos de uso. Editamos el archivo FeatureContext:</p>
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
- 19
- 20
- 21
- 22
- 23
- 24
- 25
- 26
- 27
- 28
- 29
- 30
- 31
- 32
- 33
- 34
- 35
- 36
- 37
- 38
- 39
- 40
- 41
- 42
- 43
- 44
- 45
- 46
- 47
- 48
- 49
- 50
- 51
- 52
- 53
- 54
- 55
- 56
- 57
- 58
- 59
- 60
- 61
- 62
- 63
- 64
- 65
- 66
- 67
- 68
- 69
- 70
- 71
- 72
- 73
- 74
- 75
- 76
- 77
- 78
- 79
- 80
- 81
- 82
- 83
- 84
- 85
- 86
- 87
- 88
- 89
- 90
- 91
- 92
- 93
- 94
- 95
- 96
- 97
- 98
- 99
-100
-101
-102
-103
-104
-105
-106
-107</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
 
 <span class="k">use</span> <span class="nx">Behat\Behat\Context\Context</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Behat\Behat\Tester\Exception\PendingException</span><span class="p">;</span>
@@ -1632,14 +1642,6 @@
 <span class="sd">     * @When pago con :arg1 puntos y :arg2 euros</span>
 <span class="sd">     */</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">pagoConPuntosYEuros</span><span class="p">(</span><span class="nv">$arg1</span><span class="p">,</span> <span class="nv">$arg2</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">throw</span> <span class="k">new</span> <span class="nx">PendingException</span><span class="p">();</span>
-    <span class="p">}</span>
-
-    <span class="sd">/**</span>
-<span class="sd">     * @Then la factura no está pagada</span>
-<span class="sd">     */</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">laFacturaNoEstaPagada</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nx">PendingException</span><span class="p">();</span>
     <span class="p">}</span>
