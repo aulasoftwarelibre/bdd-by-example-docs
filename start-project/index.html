@@ -346,6 +346,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../first-scenario/" title="Implementando el primer escenario" class="md-nav__link">
+      Implementando el primer escenario
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -434,9 +446,11 @@
 5
 6
 7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="p">{</span>
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="p">{</span>
     <span class="nt">&quot;require-dev&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;behat/behat&quot;</span><span class="p">:</span> <span class="s2">&quot;^3.4&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;kanel/phpspec-data-provider-extension&quot;</span><span class="p">:</span> <span class="s2">&quot;^1.0&quot;</span><span class="p">,</span>
         <span class="nt">&quot;phpspec/phpspec&quot;</span><span class="p">:</span> <span class="s2">&quot;^4.3&quot;</span><span class="p">,</span>
         <span class="nt">&quot;leanphp/phpspec-code-coverage&quot;</span><span class="p">:</span> <span class="s2">&quot;^4.2&quot;</span><span class="p">,</span>
         <span class="nt">&quot;phpunit/phpunit&quot;</span><span class="p">:</span> <span class="s2">&quot;^7.0&quot;</span>
@@ -1070,7 +1084,7 @@
 <span class="k">class</span> <span class="nc">MenuSpec</span> <span class="k">extends</span> <span class="nx">ObjectBehavior</span>
 <span class="p">{</span>
     <span class="k">const</span> <span class="no">NUMBER</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-    <span class="k">const</span> <span class="no">PRICE</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+    <span class="k">const</span> <span class="no">PRICE</span> <span class="o">=</span> <span class="mi">2500</span><span class="p">;</span>
 
     <span class="k">function</span> <span class="nf">let</span><span class="p">()</span>
     <span class="p">{</span>
@@ -1096,6 +1110,10 @@
 </td></tr></table>
 
 <p>Las líneas 24 y 29 especifican los dos comportamientos que esperamos de nuestra clase, devolver el número y devolver el precio. Pero antes de devolver nada esa información debe incorporarse a través del constructor. Para ello usamos la función _ let_ (línea 14), que sirve para configurar la prueba en su comienzo. En este caso, la línea 16 construye la clase con el número y el precio del menú. El uso de constantes es para ser más descriptivo a la hora de leer la prueba. Ya que hemos especificado como se construye la clase, especificamos los otros dos comportamientos.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Estamos usando euros para los ejemplos. En realidad, y dado que PHP no tiene un tipo de datos para datos financieros, deberíamos usar alguna clase <em>Moneda</em> o guardar los datos en céntimos para evitar el uso de decimales. Para simplificar el tutorial vamos a usar céntimos. Así que aunque en los test usemos euros en la clase <em>Menu</em> vamos a almacenar el valor en céntimos.</p>
+</div>
 <p>Para indicar el número de menú, indicamos que llamamos a un método <code>number()</code> (línea 26) que debe devolver el mismo valor que se pasó al constructor. Para indicar el precio, lo mismo pero llamando a un método <code>price()</code> (línea 31).</p>
 <p>Ejecutamos otra vez <em>PhpSpec</em>, respondiendo afirmativamente a todas las preguntas:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span>vendor/bin/phpspec run
@@ -1268,7 +1286,7 @@
   <span class="m">24</span>  ✘ has a menu number
         expected <span class="o">[</span>integer:10<span class="o">]</span>, but got null.
   <span class="m">29</span>  ✘ has a price
-        expected <span class="o">[</span>integer:25<span class="o">]</span>, but got null.
+        expected <span class="o">[</span>integer:2500<span class="o">]</span>, but got null.
 
 ----  failed examples
 
@@ -1278,7 +1296,7 @@
 
         Restaurant/Menu
   <span class="m">29</span>  ✘ has a price
-        expected <span class="o">[</span>integer:25<span class="o">]</span>, but got null.
+        expected <span class="o">[</span>integer:2500<span class="o">]</span>, but got null.
 
 
 <span class="m">1</span> specs
@@ -1357,27 +1375,29 @@
 22
 23
 24
-25</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
+25
+26</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="k">declare</span><span class="p">(</span><span class="nx">strict_types</span><span class="o">=</span><span class="mi">1</span><span class="p">);</span>
 
 <span class="k">namespace</span> <span class="nx">Restaurant</span><span class="p">;</span>
 
-<span class="k">class</span> <span class="nc">Menu</span>
+<span class="k">class</span> <span class="nc">Menu</span> <span class="k">implements</span> <span class="nx">Priced</span>
 <span class="p">{</span>
     <span class="k">private</span> <span class="nv">$number</span><span class="p">;</span>
     <span class="k">private</span> <span class="nv">$price</span><span class="p">;</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$number</span><span class="p">,</span> <span class="nv">$price</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nx">int</span> <span class="nv">$number</span><span class="p">,</span> <span class="nx">int</span> <span class="nv">$price</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">number</span> <span class="o">=</span> <span class="nv">$number</span><span class="p">;</span>
         <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">price</span> <span class="o">=</span> <span class="nv">$price</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">number</span><span class="p">()</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">number</span><span class="p">()</span><span class="o">:</span> <span class="nx">int</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">number</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">price</span><span class="p">()</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">price</span><span class="p">()</span><span class="o">:</span> <span class="nx">int</span>
     <span class="p">{</span>
         <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">price</span><span class="p">;</span>
     <span class="p">}</span>
@@ -1552,7 +1572,7 @@
     <span class="k">public</span> <span class="k">function</span> <span class="nf">losSiguientesMenus</span><span class="p">(</span><span class="nx">TableNode</span> <span class="nv">$table</span><span class="p">)</span>
     <span class="p">{</span>
 <span class="hll">        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$table</span><span class="o">-&gt;</span><span class="na">getHash</span><span class="p">()</span> <span class="k">as</span> <span class="nv">$menu</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="hll">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">menus</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Restaurant\Menu</span><span class="p">(</span><span class="nv">$menu</span><span class="p">[</span><span class="s1">&#39;número&#39;</span><span class="p">],</span> <span class="nv">$menu</span><span class="p">[</span><span class="s1">&#39;precio&#39;</span><span class="p">]);</span>
+</span><span class="hll">            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">menus</span><span class="p">[</span><span class="nv">$menu</span><span class="p">[</span><span class="s1">&#39;número&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Restaurant\Menu</span><span class="p">(</span><span class="nv">$menu</span><span class="p">[</span><span class="s1">&#39;número&#39;</span><span class="p">],</span> <span class="nv">$menu</span><span class="p">[</span><span class="s1">&#39;precio&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
 </span><span class="hll">        <span class="p">}</span>
 </span>    <span class="p">}</span>
 
@@ -1673,6 +1693,20 @@
             </div>
           </a>
         
+        
+          <a href="../first-scenario/" title="Implementando el primer escenario" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Implementando el primer escenario
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
