@@ -40,6 +40,7 @@ pages:
     - Crear el proyecto: start-project.md
     - Implementando el primer escenario: first-scenario.md
     - Segundo escenario: second-scenario.md
+    - Tercer escenario: third-scenario.md
 
 google_analytics:
     - 'UA-51754922-1'
