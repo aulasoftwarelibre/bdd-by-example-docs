@@ -7,8 +7,7 @@ Vamos a implementar el cuarto escenario
         Dado que he comprado 5 menús del número 1
         Cuando pido la cuenta recibo una factura de 55 euros
         Y pago con 550 puntos y 0 euros
-        Entonces la factura no está pagada
-        Y quedan 5 euros por pagar
+        Entonces quedan 5 euros por pagar
 
 Si ejecutamos la prueba:
 

@@ -71,8 +71,7 @@ Crearemos dentro de dicho directorio un fichero llamado `menu.feature` con el co
             Dado que he comprado 5 menús del número 1
             Cuando pido la cuenta recibo una factura de 55 euros
             Y pago con 550 puntos y 0 euros
-            Entonces la factura no está pagada
-            Y quedan 5 euros por pagar
+            Entonces quedan 5 euros por pagar
 
         Escenario: Comprar menús de varios tipos
             Dado que he comprado 1 menú del número 1
@@ -189,14 +188,6 @@ Si editamos el archivo _features/bootstrap/FeatureContext.php_, veremos el archi
          * @When pago con :arg1 puntos y :arg2 euros
          */
         public function pagoConPuntosYEuros($arg1, $arg2)
-        {
-            throw new PendingException();
-        }
-
-        /**
-         * @Then la factura no está pagada
-         */
-        public function laFacturaNoEstaPagada()
         {
             throw new PendingException();
         }
@@ -670,14 +661,6 @@ Ahora podemos programar el paso para ir progresando en nuestros casos de uso. Ed
          * @When pago con :arg1 puntos y :arg2 euros
          */
         public function pagoConPuntosYEuros($arg1, $arg2)
-        {
-            throw new PendingException();
-        }
-    
-        /**
-         * @Then la factura no está pagada
-         */
-        public function laFacturaNoEstaPagada()
         {
             throw new PendingException();
         }

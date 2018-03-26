@@ -126,8 +126,7 @@ Vamos a describir un posible archivo _gherkin_ para nuestro ejemplo del restaura
             Dado que he comprado 5 menús del número 1
             Cuando pido la cuenta recibo una factura de 55 euros
             Y pago con 550 puntos y 0 euros
-            Entonces la factura no está pagada
-            Y quedan 5 euros por pagar
+            Entonces quedan 5 euros por pagar
 
         Escenario: Comprar menús de varios tipos
             Dado que he comprado 1 menú del número 1

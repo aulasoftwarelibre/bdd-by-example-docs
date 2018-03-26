@@ -386,14 +386,6 @@ Quedando el código en el archivo `FeatureContext` como sigue:
         }
 
         /**
-        * @Then la factura no está pagada
-        */
-        public function laFacturaNoEstaPagada()
-        {
-            throw new PendingException();
-        }
-
-        /**
         * @Then quedan :arg1 euros por pagar
         */
         public function quedanEurosPorPagar($arg1)
@@ -680,14 +672,6 @@ Ya nos resta terminar de implementar la historia de usuario. Nuestra clase `Feat
         * @When pago con :arg1 puntos y :arg2 euros
         */
         public function pagoConPuntosYEuros($arg1, $arg2)
-        {
-            throw new PendingException();
-        }
-
-        /**
-        * @Then la factura no está pagada
-        */
-        public function laFacturaNoEstaPagada()
         {
             throw new PendingException();
         }
