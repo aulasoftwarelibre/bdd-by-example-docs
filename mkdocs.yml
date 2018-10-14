@@ -1,7 +1,6 @@
 site_name: 'BDD by example'
 site_author: 'Sergio Gómez <sergio@uco.es>'
 site_description: 'Curso básico de BDD'
-site_favicon: 'images/logoasl.png'
 repo_name: 'aulasoftwarelibre/bdd-by-example-docs'
 repo_url: 'https://github.com/aulasoftwarelibre/bdd-by-example-docs.git'
 
@@ -20,7 +19,9 @@ extra:
         - type: 'twitter'
           link: 'https://twitter.com/aulasl'
         - type: 'facebook'
-          link: 'https://facebook.com/aulasl'
+          link: 'https://facebook.com/aulasoftwarelibre'
+        - type: 'instagram'
+          link: 'https://instagram.com/aulasoftwarelibre'
     feature:
         tabs: true
 
@@ -33,7 +34,7 @@ markdown_extensions:
     - def_list: ~
     - inline_graphviz: ~
 
-pages:
+nav:
     - Inicio: index.md
     - Introducción: introduction.md
     - Modelando con ejemplos: modelling.md
