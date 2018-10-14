@@ -2,3 +2,5 @@ mkdocs
 mkdocs-material
 mkdocs-pandoc
 markdown-inline-graphviz
+Markdown<3.0
+pymdown-extensions<6.0
