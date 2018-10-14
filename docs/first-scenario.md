@@ -16,6 +16,10 @@ Para implementar esta escenario, que es realmente el primero de nuestro proyecto
 
 Usamos _PhpSpec_ para crear la especificación, siguiendo los pasos que anteriormente hicimos con la clase _Menu_.
 
+    vendor/bin/phpspec desc Restaurant/Bill
+
+Y como resultado tendremos nuestra nueva clase _Bill_:
+
     #!sh
     bash$ vendor/bin/phpspec desc Restaurant/Bill
     Specification for Restaurant\Bill created in /home/sergio/Developer/curso-web/bdd-by-example/bdd-by-example/spec/Restaurant/BillSpec.php.
@@ -75,9 +79,125 @@ Ahora tenemos que describir la API de nuestra clase. Concretamente para este esc
 * Determinar cuánto resta por pagar
 * Determinar cuántos puntos se han ganado
 
-Para esta prueba vamos a suponer que tenemos ya una instancia de _Menu_ que cuesta 10€. ¿Importa el número de menú? No, en realidad no. En más, ¿podríamos añadir elementos a la cuenta que no fueran menús? Lo lógico es que sí. Entonces, ¿cómo hacemos nuestra clase compatible con cualquier clase que tenga un precio? Pues utilizando interfaces. Vamos a crear una interfaz _Priced_ que obligue a las clases que lo implementen a devolver _price()_. Entramos en la primera refactorización de nuestra clase _Menu_.
+Para esta prueba vamos a suponer que tenemos ya una instancia de _Menu_ que cuesta 10€.
+
+## Añadiendo elementos a la cuenta
+
+Ahora ya podemos añadir elementos a la cuenta, sin importarnos si es un menú o cualquier otra cosa, solo los importa que tenga precio. Vamos a hacer las pruebas con un solo elemento que cueste 10€.
+
+Vamos a crear el método _let_ para configurar los datos de ejemplo:
+
+    #!php
+    <?php
+
+    namespace spec\Restaurant;
+
+    use Restaurant\Bill;
+    use PhpSpec\ObjectBehavior;
+    use Prophecy\Argument;
+    use Restaurant\Menu;
+
+    class BillSpec extends ObjectBehavior
+    {
+        function let(Menu $item)
+        {
+            $item->price()->willReturn(1000);
+        }
+        
+        function it_is_initializable()
+        {
+            $this->shouldHaveType(Bill::class);
+        }
+    }
+
+En esta ocasión no estamos usando _let_ para configurar el constructor de la clase, que por ahora no hemos determinado que vayamos a necesitar, sino para configurar una instancia de la clase _Menu_ y que cuando se llamen a la función _price()_ devolverá 1000. Hay que tener en cuenta que _Menu_ no es algo que hayamos instanciado nosotros. Lo que ha ocurrido es que _phpspec_ ha creado un _doble_, una clase que simula las respuestas a los métodos con los valores que se le indican con las cláusulas _willReturn_.
+
+    #!php
+    <?php
+
+    namespace spec\Restaurant;
+
+    use Restaurant\Bill;
+    use PhpSpec\ObjectBehavior;
+    use Prophecy\Argument;
+    use Restaurant\Menu;
+
+    class BillSpec extends ObjectBehavior
+    {
+        function let(Menu $item)
+        {
+            $item->price()->willReturn(1000);
+        }
+
+        function it_is_initializable()
+        {
+            $this->shouldHaveType(Bill::class);
+        }
+
+        function it_has_no_items_by_default()
+        {
+            $this->getTotal()->shouldBe(0);
+        }
+
+        function it_adds_an_item(Menu $item)
+        {
+            $this->addItem($item);
+            $this->getTotal()->shouldBe(1100);
+        }
+    }
+
+
+Estamos describiendo que nuestra cuenta, cuando se crea, no debe tener ningún elemento, y que los elementos que se añaden incrementan la cuenta (con IVA). Debido al incremento del IVA el valor de retorno será siempre flotante. Ejecutamos las pruebas, que fallarán, y pasamos a implementar el código. Pasamos a completar el código de nuestra clase _Bill_:
+
+    #!php
+    <?php
+    declare(strict_types=1);
+
+    namespace Restaurant;
+
+    class Bill
+    {
+        const VAT = '1.10';
+        private $items;
+
+        public function __construct()
+        {
+            $this->items = [];
+        }
+
+        public function getTotal(): int
+        {
+            return (int) (array_reduce($this->items, function ($carry, Menu $menu) {
+                return $carry + $menu->price();
+            }, 0) * self::VAT);
+        }
+
+        public function addItem(Menu $item): void
+        {
+            $this->items[] = $item;
+        }
+    }
+
+Y ejecutamos las pruebas:
+
+    #!sh
+    vendor/bin/phpspec run Restaurant\\Bill
+
+        Restaurant\Bill
+
+    17  ✔ is initializable
+    22  ✔ has no items by default
+    27  ✔ adds an item
+    33  ✔ adds multiple items
+
+
+    1 specs
+    4 examples (4 passed)
+    112ms
 
 ## Refactorizar _Menu_
+
+A la clase Bill, ¿le importa el número del menú? No, en realidad no. En más, ¿podríamos añadir elementos a la cuenta que no fueran menús? Lo lógico es que sí. Entonces, ¿cómo hacemos nuestra clase compatible con cualquier clase que tenga un precio? Pues utilizando interfaces. Vamos a crear una interfaz _Priced_ que obligue a las clases que lo implementen a devolver _price()_. De esa manera, a _Bill_ solo le interesa que elemento que añadimos a la cuenta tenga un método _price_.
 
 Añadimos esta especificación a _MenuSpec_:
 
@@ -158,36 +278,7 @@ Y ya hemos conseguido que la prueba pase:
     5 examples (5 passed)
     82ms
 
-## Añadiendo elementos a la cuenta
-
-Ahora ya podemos añadir elementos a la cuenta, sin importarnos si es un menú o cualquier otra cosa, solo los importa que tenga precio. Vamos a hacer las pruebas con un solo elemento que cueste 10€.
-
-Vamos a crear el método _let_ para configurar los datos de ejemplo:
-
-    #!php
-    <?php
-
-    namespace spec\Restaurant;
-
-    use Restaurant\Bill;
-    use PhpSpec\ObjectBehavior;
-    use Prophecy\Argument;
-    use Restaurant\Priced;
-
-    class BillSpec extends ObjectBehavior
-    {
-        function let(Priced $item)
-        {
-            $item->price()->willReturn(1000);
-        }
-        
-        function it_is_initializable()
-        {
-            $this->shouldHaveType(Bill::class);
-        }
-    }
-
-En esta ocasión no estamos usando _let_ para configurar el constructor de la clase, que por ahora no hemos determinado que vayamos a necesitar, sino para configurar una instancia de una clase que implementa el interfaz _Priced_ y que cuando se llamen a la función _price()_ devolverá 1000. Hay que tener en cuenta que _Priced_ es una interfaz, no una clase, y que en realidad no sería posible crear instancias de _Priced_. Sin embargo, _phpspec_ crear un _doble_, una clase que implementa la interfaz que se le indica y que simula las respuestas a los métodos con los valores que se le indican con las cláusulas _willReturn_.
+Refactorizamos la especificación de Bill:
 
     #!php
     <?php
@@ -219,7 +310,7 @@ En esta ocasión no estamos usando _let_ para configurar el constructor de la cl
         function it_adds_an_item(Priced $item)
         {
             $this->addItem($item);
-            $this->getTotal()->shouldBe(1100)
+            $this->getTotal()->shouldBe(1100);
         }
 
         function it_adds_multiple_items(Priced $item, Priced $anotherItem)
@@ -231,8 +322,7 @@ En esta ocasión no estamos usando _let_ para configurar el constructor de la cl
         }
     }
 
-
-Estamos describiendo que nuestra cuenta, cuando se crea, no debe tener ningún elemento, y que los elementos que se añaden incrementan la cuenta (con IVA). Debido al incremento del IVA el valor de retorno será siempre flotante. Ejecutamos las pruebas, que fallarán, y pasamos a implementar el código. Pasamos a completar el código de nuestra clase _Bill_:
+Y refactorizamos la clase _Bill_:
 
     #!php
     <?php
@@ -252,9 +342,9 @@ Estamos describiendo que nuestra cuenta, cuando se crea, no debe tener ningún e
 
         public function getTotal(): int
         {
-            return array_reduce($this->items, function ($carry, Priced $priced) {
-                return $carry + $priced->price();
-            }, 0) * self::VAT;
+            return (int) (array_reduce($this->items, function ($carry, Priced $menu) {
+                return $carry + $menu->price();
+            }, 0) * self::VAT);
         }
 
         public function addItem(Priced $item): void
@@ -262,23 +352,6 @@ Estamos describiendo que nuestra cuenta, cuando se crea, no debe tener ningún e
             $this->items[] = $item;
         }
     }
-
-Y ejecutamos las pruebas:
-
-    #!sh
-    vendor/bin/phpspec run Restaurant\\Bill
-
-        Restaurant\Bill
-
-    17  ✔ is initializable
-    22  ✔ has no items by default
-    27  ✔ adds an item
-    33  ✔ adds multiple items
-
-
-    1 specs
-    4 examples (4 passed)
-    112ms
 
 ## Implementando los primeros steps
 
@@ -389,14 +462,6 @@ Quedando el código en el archivo `FeatureContext` como sigue:
         * @Then quedan :arg1 euros por pagar
         */
         public function quedanEurosPorPagar($arg1)
-        {
-            throw new PendingException();
-        }
-
-        /**
-        * @Given que he comprado :arg1 menú del número :arg2
-        */
-        public function queHeCompradoMenuDelNumero($arg1, $arg2)
         {
             throw new PendingException();
         }
@@ -680,14 +745,6 @@ Ya nos resta terminar de implementar la historia de usuario. Nuestra clase `Feat
         * @Then quedan :arg1 euros por pagar
         */
         public function quedanEurosPorPagar($arg1)
-        {
-            throw new PendingException();
-        }
-
-        /**
-        * @Given que he comprado :arg1 menú del número :arg2
-        */
-        public function queHeCompradoMenuDelNumero($arg1, $arg2)
         {
             throw new PendingException();
         }
