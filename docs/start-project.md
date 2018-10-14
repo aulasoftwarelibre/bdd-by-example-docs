@@ -11,9 +11,7 @@ Se nos creará un directorio con todo lo que necesitamos para empezar a trabajar
     {
         "require-dev": {
             "behat/behat": "^3.4",
-            "kanel/phpspec-data-provider-extension": "^1.0",
-            "phpspec/phpspec": "^4.3",
-            "leanphp/phpspec-code-coverage": "^4.2",
+            "phpspec/phpspec": "^5.0",
             "phpunit/phpunit": "^7.0"
         }
     }
@@ -536,7 +534,7 @@ La especificación de la prueba ha creado el esqueleto de nuestra clase, ahora s
 
     namespace Restaurant;
 
-    class Menu implements Priced
+    class Menu
     {
         private $number;
         private $price;
@@ -577,7 +575,7 @@ Ejecutamos las pruebas y comprobamos que pasan:
 
 Ya tenemos nuestra primera clase completada que pasa la especificación.
 
-## Terminar de implementar el primer step
+## Terminar de implementar los antecedentes
 
 Ahora podemos programar el paso para ir progresando en nuestros casos de uso. Editamos el archivo FeatureContext:
     
