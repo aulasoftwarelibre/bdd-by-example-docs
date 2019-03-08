@@ -1,50 +1,49 @@
-site_name: 'BDD by example'
-site_author: 'Sergio Gómez <sergio@uco.es>'
-site_description: 'Curso básico de BDD'
-repo_name: 'aulasoftwarelibre/bdd-by-example-docs'
-repo_url: 'https://github.com/aulasoftwarelibre/bdd-by-example-docs.git'
+site_name: "BDD by example"
+site_author: "Sergio Gómez <sergio@uco.es>"
+site_description: "Curso básico de BDD"
+repo_name: "aulasoftwarelibre/bdd-by-example-docs"
+repo_url: "https://github.com/aulasoftwarelibre/bdd-by-example-docs.git"
 
 theme:
-    name: 'material'
-    language: 'es'
+  name: "material"
+  language: "es"
 
 extra_css: [extra.css]
 extra:
-    palette:
-        primary: 'green'
-        accent: 'light green'
-    social:
-        - type: 'github'
-          link: 'https://github.com/aulasoftwarelibre'
-        - type: 'twitter'
-          link: 'https://twitter.com/aulasl'
-        - type: 'facebook'
-          link: 'https://facebook.com/aulasoftwarelibre'
-        - type: 'instagram'
-          link: 'https://instagram.com/aulasoftwarelibre'
-    feature:
-        tabs: true
+  palette:
+    primary: "green"
+    accent: "light green"
+  social:
+    - type: "github"
+      link: "https://github.com/aulasoftwarelibre"
+    - type: "twitter"
+      link: "https://twitter.com/aulasl"
+    - type: "facebook"
+      link: "https://facebook.com/aulasoftwarelibre"
+    - type: "instagram"
+      link: "https://instagram.com/aulasoftwarelibre"
+  feature:
+    tabs: true
 
 markdown_extensions:
-    - admonition: ~
-    - codehilite:
-        guess_lang: false
-    - toc:
-        permalink: true
-    - def_list: ~
-    - inline_graphviz: ~
+  - admonition: ~
+  - codehilite: ~
+  - toc:
+      permalink: true
+  - def_list: ~
+  - mdx_inline_graphviz: ~
 
 nav:
-    - Inicio: index.md
-    - Introducción: introduction.md
-    - Modelando con ejemplos: modelling.md
-    - Crear el proyecto: start-project.md
-    - Implementando el primer escenario: first-scenario.md
-    - Segundo escenario: second-scenario.md
-    - Tercer escenario: third-scenario.md
-    - Cuarto escenario: fourth-scenario.md
-    - Quinto escenario: fifth-scenario.md
+  - Inicio: index.md
+  - Introducción: introduction.md
+  - Modelando con ejemplos: modelling.md
+  - Crear el proyecto: start-project.md
+  - Implementando el primer escenario: first-scenario.md
+  - Segundo escenario: second-scenario.md
+  - Tercer escenario: third-scenario.md
+  - Cuarto escenario: fourth-scenario.md
+  - Quinto escenario: fifth-scenario.md
 
 google_analytics:
-    - 'UA-51754922-2'
-    - 'auto'
+  - "UA-51754922-2"
+  - "auto"
