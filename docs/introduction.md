@@ -24,33 +24,34 @@ Los test que se pueden realizar pueden ser de unidad, funcionales y de aceptaci�
 
 Si queremos implementar una clase que implemente funciones matemáticas, este sería el código de una prueba unitaria que, con PHPUnit, escribiríamos para implementar la funcionalidad _suma_:
 
-    #!php
-    <?php
-    use PHPUnit\Framework\TestCase;
+```php
+<?php
+use PHPUnit\Framework\TestCase;
 
-    class CalculatorTest extends TestCase
+class CalculatorTest extends TestCase
+{
+    public function testAdd()
     {
-        public function testAdd()
-        {
-            $calculator = new Calculator();
-            $result = $calculator->add(3, 2);
+        $calculator = new Calculator();
+        $result = $calculator->add(3, 2);
 
-            $this->assertEquals(5, $result);
-        }
+        $this->assertEquals(5, $result);
     }
+}
+```
 
 Solo cuando tengamos el test escrito podremos desarrollar el código:
 
-    #!php
-    <?php
-    class Calculator
+```php
+<?php
+class Calculator
+{
+    public function add (int $a, int $b): int
     {
-        public function add (int $a, int $b): int
-        {
-            return $a + $b;
-        }
+        return $a + $b;
     }
-
+}
+```
 
 ### Las tres reglas
 
@@ -79,22 +80,23 @@ Los test que se pueden realizar pueden ser de unidad, funcionales y de aceptaci�
 
 Si usamos el ejemplo de la calculadora, esta sería la forma de describir el comportamiento de la calculadora:
 
-    #!php
-    <?php
-    use PhpSpec\ObjectBehavior;
+```php
+<?php
+use PhpSpec\ObjectBehavior;
 
-    class CalculatorSpec extends ObjectBehavior
+class CalculatorSpec extends ObjectBehavior
+{
+    function it_is_initializable()
     {
-        function it_is_initializable()
-        {
-            $this->shouldHaveType(Calculator::class);
-        }
-
-        function it_adds_to_numbers()
-        {
-            $this->add(2, 3)->shouldReturn(5);
-        }
+        $this->shouldHaveType(Calculator::class);
     }
+
+    function it_adds_to_numbers()
+    {
+        $this->add(2, 3)->shouldReturn(5);
+    }
+}
+```
 
 Las diferencias principales con PHPUnit son dos:
 
@@ -107,13 +109,14 @@ Hay muchas más diferencias, pero a grandes rasgos nos vamos a quedar con esas d
 
 Behat utiliza un lenguaje llamado Gherkin para describir historias de usuario. Es más apropiado para hacer test de aceptación. Este sería un ejemplo de un test de aceptación con Gherkin:
 
-    #!gherkin
-    Característica: Crear una calculadora
+```gherkin
+Característica: Crear una calculadora
 
-        Escenario: Sumar dos números
-            Dado que quiero sumar dos números
-            Cuando introduzco el número 2
-            E introduzco el número 3
-            Entonces recibo el número 5
+    Escenario: Sumar dos números
+        Dado que quiero sumar dos números
+        Cuando introduzco el número 2
+        E introduzco el número 3
+        Entonces recibo el número 5
+```
 
 Esta prueba es una simplificación de lo que permite hacer Gherkin. La forma en cómo se ejecuta e implementa este tipo de test lo veremos más adelante.
